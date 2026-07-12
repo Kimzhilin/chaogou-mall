@@ -307,6 +307,19 @@ function viewHome() {
   }).join('') + `<div class="dots">${BANNERS.map((_, i) => `<i class="${i === 0 ? 'on' : ''}" data-banner="${i}"></i>`).join('')}</div>`;
 
   const hot = [...PRODUCTS].sort((a, b) => b.sales - a.sales).slice(0, 10);
+
+  /* 首页快捷入口：始终可见，解决窄屏下顶部“订单”文字被隐藏、找不到入口的问题 */
+  const cartN = (get(LS.cart, []) || []).reduce((s, i) => s + (i.qty || 1), 0);
+  const me = get(LS.wxuser, null);
+  const quickNav = `
+    <div class="quick-nav">
+      <div class="qn" data-go="#/orders"><span class="qn-ic">📦</span><span>我的订单</span></div>
+      <div class="qn" data-go="#/cart"><span class="qn-ic">🛍️</span><span>购物车${cartN ? ` (${cartN})` : ''}</span></div>
+      <div class="qn" data-go="#/coupons"><span class="qn-ic">🎟️</span><span>领券中心</span></div>
+      <div class="qn" data-go="#/address"><span class="qn-ic">📍</span><span>我的地址</span></div>
+      <div class="qn ${me ? '' : 'is-wx'}" id="qnWx" data-act="wxlogin"><span class="qn-ic">💬</span><span>${me ? '已登录' : '微信登录'}</span></div>
+    </div>`;
+
   const couponStrip = `
     <div class="coupon-strip" data-act="coupons">
       <div class="cs-title">🎟️ 领券中心</div>
@@ -319,6 +332,7 @@ function viewHome() {
   app.innerHTML = `
     <div class="wrap">
       <div class="banner" id="banner">${bannerHTML}</div>
+      ${quickNav}
       ${couponStrip}
       ${seckillSectionHTML()}
       <div class="section-title"><h2>🔥 热销榜单</h2><span class="more" data-act="cat:phone">查看全部 ›</span></div>
