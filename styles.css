@@ -72,6 +72,7 @@ img { display: block; }
   height: 42px; padding: 0 26px; border-radius: 0 22px 22px 0;
   background: linear-gradient(135deg, var(--tb-red), var(--tb-red-2));
   color: #fff; font-size: 15px; font-weight: 600;
+  flex-shrink: 0; white-space: nowrap;   /* 防止窄屏被挤压导致“搜索”竖排 */
 }
 .search button:hover { filter: brightness(1.05); }
 .top-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
@@ -233,6 +234,21 @@ img { display: block; }
 }
 .cs-coupon small { font-weight: 400; color: var(--sub); font-size: 11px; }
 .coupon-strip .cs-more { font-size: 13px; color: var(--tb-red); font-weight: 700; white-space: nowrap; }
+
+/* ---------------- 首页快捷入口（“我的订单”等，始终可见，不被窄屏隐藏） ---------------- */
+.quick-nav {
+  margin-top: 22px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+}
+.qn {
+  background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  cursor: pointer; transition: .18s; box-shadow: var(--shadow);
+}
+.qn:hover { transform: translateY(-3px); border-color: #ffd0bd; box-shadow: var(--shadow-hover); }
+.qn-ic { font-size: 26px; line-height: 1; }
+.qn span:last-child { font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+.qn.is-wx { background: linear-gradient(135deg,#e8faf0,#d6f5e4); border-color: #bdebd0; }
+.qn.is-wx span:last-child { color: #15a05a; }
 
 /* ---------------- 领券中心页 ---------------- */
 .coupon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -689,6 +705,8 @@ img { display: block; }
   .coupon-grid { grid-template-columns: 1fr; }
   .topbar-inner { gap: 10px; }
   .logo-tag { display: none; }
+  .search button { padding: 0 16px; font-size: 14px; }
+  .quick-nav { grid-template-columns: repeat(3, 1fr); gap: 10px; }
 }
 
 /* 分类专题页 Hero */
