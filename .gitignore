@@ -1,0 +1,7 @@
+node_modules/
+generated-images/
+*.py
+test_*.js
+tmp_*.js
+verify_*.js
+.workbuddy/
